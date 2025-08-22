@@ -2,25 +2,40 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
+from flask import Flask
+import threading
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
+# === Flask para puerto HTTP ===
+app = Flask("")
+
+@app.route("/")
+def home():
+    return "Bot activo ✅"
+
+# Ejecutar Flask en un hilo separado
+def run_flask():
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
+
+threading.Thread(target=run_flask).start()
+
 # === Intents correctos ===
 intents = discord.Intents.default()
 intents.guilds = True
-intents.members = True  # Necesario para detectar miembros nuevos y asignar roles
+intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
 
+# === Eventos de tu bot ===
 @bot.event
 async def on_ready():
     print(f"✅ Bot conectado como {bot.user}")
-
-    guild = bot.guilds[0]  # Primer servidor donde está el bot
+    guild = bot.guilds[0]
     print(f"Configurando servidor: {guild.name}")
 
-    # === CREACIÓN DE ROLES ===
     roles = [
         ("CEO 👑", discord.Permissions.all()),
         ("Partner 🤝", discord.Permissions(administrator=True)),
@@ -39,13 +54,12 @@ async def on_ready():
             role = await guild.create_role(
                 name=name,
                 permissions=perms,
-                mentionable=True,  # Se puede mencionar con @
-                hoist=True         # Aparece separado en la lista de miembros
+                mentionable=True,
+                hoist=True
             )
         created_roles[name] = role
         print(f"Rol creado o existente: {name}")
 
-    # === CREACIÓN DE CATEGORÍAS Y CANALES ===
     categories = {
         "01_Estrategia": ["📢_anuncios", "📊_board-reports", "🎯_okrs"],
         "02_Operaciones": ["🗓_turnos", "✅_calidad-qa", "📈_kpis", "📖_playbooks", "👥_supervisores", "🎯_closer"],
@@ -67,17 +81,13 @@ async def on_ready():
                 await guild.create_text_channel(chan, category=category)
         print(f"Categoría creada o existente: {cat_name}")
 
-    print("✅ Configuración del servidor terminada")
-
-    # === ASIGNAR ROL "Agents 🎧" A TODOS LOS MIEMBROS EXISTENTES ===
     role_agents = discord.utils.get(guild.roles, name="Agents 🎧")
     if role_agents:
         for member in guild.members:
-            if role_agents not in member.roles and not member.bot:  # evitar bots
+            if role_agents not in member.roles and not member.bot:
                 await member.add_roles(role_agents)
                 print(f"✅ Rol 'Agents 🎧' asignado a {member.name}")
 
-# === BIENVENIDA AUTOMÁTICA Y ROL POR DEFECTO ===
 @bot.event
 async def on_member_join(member):
     guild = member.guild
@@ -89,7 +99,6 @@ async def on_member_join(member):
             "Revisa los canales y asigna tu rol correspondiente para empezar."
         )
 
-    # Asignar rol por defecto "Agents 🎧"
     role = discord.utils.get(guild.roles, name="Agents 🎧")
     if role:
         await member.add_roles(role)
