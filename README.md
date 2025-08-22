@@ -32,4 +32,4 @@ Este bot configura un servidor de Discord con todos los roles, categorías, cana
 
 6. **Invita el bot a tu servidor**  
    - Usa el link de invitación con permisos de admin.  
-   - Una vez dentro, configurará todo automáticamente.  
+   - Una vez dentro, configurará todo automáticamente.
