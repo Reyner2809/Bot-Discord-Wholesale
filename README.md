@@ -76,8 +76,21 @@ python setup_discord.py
 ```
 
 #### 6. **Invita el Bot a tu Servidor**
-- 🔗 Usa el link de invitación con permisos de administrador
-- ✅ Una vez dentro, configurará todo automáticamente
+
+<div align="center">
+
+[![Invitar Bot](https://img.shields.io/badge/Invitar_Bot-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/oauth2/authorize?client_id=1408471833921065090&permissions=8&integration_type=0&scope=bot)
+
+</div>
+
+**🔗 Link de Invitación Directa:**
+```
+https://discord.com/oauth2/authorize?client_id=1408471833921065090&permissions=8&integration_type=0&scope=bot
+```
+
+- ✅ Haz clic en el botón de arriba o copia el link
+- 🤖 El bot se unirá a tu servidor con permisos de administrador
+- ⚡ Una vez dentro, configurará todo automáticamente
 
 ---
 
@@ -129,6 +142,20 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 - **Discord** por la API
 - **Ninja Agents AI** por el checklist de configuración
 - **Comunidad** por el apoyo y feedback
+
+---
+
+## 🚀 ¡Prueba el Bot Ahora!
+
+<div align="center">
+
+### 🤖 **Invita el Bot a tu Servidor de Discord**
+
+[![Invitar Bot](https://img.shields.io/badge/Invitar_Bot_Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white&labelColor=7289DA)](https://discord.com/oauth2/authorize?client_id=1408471833921065090&permissions=8&integration_type=0&scope=bot)
+
+**✨ Configuración automática en segundos ✨**
+
+</div>
 
 ---
 
