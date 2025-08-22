@@ -11,5 +11,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiamos todo el resto del código (setup_discord.py y demás)
 COPY . .
 
+# Puerto para Render
+EXPOSE 8080
+
 # Comando para arrancar tu bot
 CMD ["python", "setup_discord.py"]

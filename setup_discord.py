@@ -2,25 +2,26 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from flask import Flask
 import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
-# === Flask para puerto HTTP ===
-app = Flask("")
+# === Servidor HTTP mínimo para Render ===
+class SimpleHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot activo ✅")
 
-@app.route("/")
-def home():
-    return "Bot activo ✅"
-
-# Ejecutar Flask en un hilo separado
-def run_flask():
+def run_server():
     port = int(os.environ.get("PORT", 8080))
-    app.run(host="0.0.0.0", port=port)
+    server = HTTPServer(('0.0.0.0', port), SimpleHandler)
+    print(f"Servidor escuchando en puerto {port}")
+    server.serve_forever()
 
-threading.Thread(target=run_flask).start()
+threading.Thread(target=run_server, daemon=True).start()
 
 # === Intents correctos ===
 intents = discord.Intents.default()
