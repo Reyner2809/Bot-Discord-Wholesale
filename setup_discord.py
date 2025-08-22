@@ -13,7 +13,8 @@ class SimpleHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b"Bot activo ✅")
+        # Codificar a UTF-8 para soportar emojis
+        self.wfile.write("Bot activo ✅".encode("utf-8"))
 
 def run_server():
     port = int(os.environ.get("PORT", 8080))
@@ -21,6 +22,7 @@ def run_server():
     print(f"Servidor escuchando en puerto {port}")
     server.serve_forever()
 
+# Ejecutar servidor en un hilo separado
 threading.Thread(target=run_server, daemon=True).start()
 
 # === Intents correctos ===
